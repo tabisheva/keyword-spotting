@@ -33,11 +33,10 @@ class KWSNet(nn.Module):
 
 
     def forward(self, x):
-        x = self.cnn(x)
-        x = x.permute(0, 2, 1)
-        x, _ = self.rnn(x)
-        x = self.linear(self.attention(x))
-        return torch.log_softmax(x, dim=1)
+        conv = self.cnn(x).permute(0, 2, 1)
+        rnn_output, _ = self.rnn(x)
+        linear_attn = self.linear(self.attention(rnn_output))
+        return torch.log_softmax(linear_attn, dim=1)
 
     def inference(self, x: torch.Tensor, window_size: int):
         if window_size > x.shape[2]:
