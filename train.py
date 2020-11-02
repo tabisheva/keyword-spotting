@@ -20,8 +20,7 @@ for dir in os.scandir(root_dir):
         continue
     for file in os.listdir(os.path.join(dir)):
         filenames.append(os.path.join(dir, file))
-        label = 1 if dir.name == "sheila" else 0
-        labels.append(label)
+        labels.append(dir.name)
 
 df = pd.DataFrame(columns=['filenames', 'labels'])
 df['filenames'] = filenames
@@ -36,7 +35,7 @@ train_x, val_x, train_y, val_y = train_test_split(df['filenames'], df['labels'],
 
 train_dataset = KWSDataset(train_x, train_y, transform=transforms['train'])
 test_dataset = KWSDataset(val_x, val_y, transform=transforms['test'])
-
+a = (val_y == "sheila").sum()
 train_dataloader = DataLoader(train_dataset,
                               batch_size=params["batch_size"],
                               num_workers=params["num_workers"],
