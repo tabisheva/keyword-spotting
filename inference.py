@@ -15,5 +15,6 @@ input = transforms['test'](wav)
 probs = model.inference(input, params["window_size"])
 wandb.init(project=params["wandb_name"], config=params)
 for prob in probs:
-    wandb.log({"probs": prob})
+    wandb.log({"probs two trigger words in the rain": prob})
+wandb.log({"test audio": [wandb.Audio(wav.numpy(), caption="Sheila sheila", sample_rate=22050)]})
 
