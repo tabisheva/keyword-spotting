@@ -50,6 +50,6 @@ class KWSNet(nn.Module):
             window, h = self.rnn(window, hidden)
             window = self.attention(window)
             window = self.linear(window)
-            p = torch.softmax(window, dim=1).squeeze()[0]
+            p = torch.softmax(window, dim=1).squeeze()[1]
             probs.append(p.item())
         return probs
