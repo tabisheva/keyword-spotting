@@ -34,7 +34,7 @@ class KWSNet(nn.Module):
 
     def forward(self, x):
         conv = self.cnn(x).permute(0, 2, 1)
-        rnn_output, _ = self.rnn(x)
+        rnn_output, _ = self.rnn(conv)
         linear_attn = self.linear(self.attention(rnn_output))
         return torch.log_softmax(linear_attn, dim=1)
 
