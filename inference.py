@@ -11,10 +11,10 @@ model.load_state_dict(torch.load(params["model_path"], map_location=device))
 model = model.eval()
 wav_file = params["path_to_file"]
 wav, sr = torchaudio.load(wav_file)
-input = transforms['test'](wav)
-probs = model.inference(input, params["window_size"])
+transformed_wav = transforms['test'](wav)
+probs = model.inference(transformed_wav, params["window_size"])
 wandb.init(project=params["wandb_name"], config=params)
 for prob in probs:
     wandb.log({"probs two trigger words in the rain": prob})
-wandb.log({"test audio": [wandb.Audio(wav.numpy(), caption="Sheila sheila", sample_rate=22050)]})
+wandb.log({"Sheila and rain": [wandb.Audio(wav.squeeze().numpy(), caption="Sheila sheila", sample_rate=22050)]})
 
